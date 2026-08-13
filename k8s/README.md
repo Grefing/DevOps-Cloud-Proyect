@@ -82,14 +82,18 @@ Para Grafana/Prometheus, ver `monitoring/README.md`.
 kubectl get hpa -n opswatch -w
 ```
 
-Generar carga dentro del cluster:
+Generar carga (Locust):
 
 ```bash
-kubectl run -n opswatch load-loop --restart=Never --image=busybox -- \
-  sh -c "while true; do wget -q -O- http://backend-api:3001/api/services; done"
+cd load-testing
+docker compose up -d
+# UI: http://localhost:8089
+# Para HPA vía Ingress: TARGET_HOST=http://opswatch.local docker compose up -d
 ```
 
-Observa réplicas (2 → hasta 20) con `kubectl get pods -l app=backend-api -n opswatch`.
+Ver `load-testing/README.md` para el flujo CRUD completo.
+
+Observa réplicas (2 → hasta 20) con `kubectl get hpa -n opswatch -w` y `kubectl get pods -l app=backend-api -n opswatch -w`.
 
 ## Manifests
 
