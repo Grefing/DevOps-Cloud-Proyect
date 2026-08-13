@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: opswatch
+  labels:
+    app.kubernetes.io/name: opswatch
+    app.kubernetes.io/part-of: opswatch
